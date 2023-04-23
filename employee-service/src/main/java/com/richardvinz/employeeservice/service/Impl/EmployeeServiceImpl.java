@@ -19,8 +19,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
 //    private final RestTemplate restTemplate;
-    private final WebClient webClient;
-
+//    private final WebClient webClient;
+private final ApiClient apiClient;
 
     @Override
     public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
@@ -54,12 +54,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 //                + employee.getDepartmentCode(), DepartmentDto.class);
 //       DepartmentDto departmentDto = forEntity.getBody();
 
-         DepartmentDto departmentDto = webClient.get()
-                .uri("http://localhost:8080/api/department/"
-                + employee.getDepartmentCode())
-                .retrieve()
-                .bodyToMono(DepartmentDto.class)
-                .block();
+//         DepartmentDto departmentDto = webClient.get()
+//                .uri("http://localhost:8080/api/department/"
+//                + employee.getDepartmentCode())
+//                .retrieve()
+//                .bodyToMono(DepartmentDto.class)
+//                .block();
+
+
+        DepartmentDto departmentDto = apiClient.getDepartment(employee.getDepartmentCode());
 
         EmployeeDto employeeDto = new EmployeeDto(
                 employee.getId(),
